@@ -11,10 +11,9 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-func homeHandler(w http.ResponseWriter, r *http.Request) {
+func executeTemplate(w http.ResponseWriter, filePath string) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	tplPath := path.Join("templates", "home.gohtml")
-	tpl, err := template.ParseFiles(tplPath)
+	tpl, err := template.ParseFiles(filePath)
 
 	if err != nil {
 		log.Printf("Parsing error: %v", err)
@@ -28,12 +27,16 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 
 	}
+}
 
+func homeHandler(w http.ResponseWriter, r *http.Request) {
+	tplPath := path.Join("templates", "home.gohtml")
+	executeTemplate(w, tplPath)
 }
 
 func contactHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	fmt.Fprint(w, `<h1>Contact Page</h1> <p>To get in touch, email me at <a href=\"mailto:hbawazy@gmail.com\">hbawazy@gmail.com</a></p>`)
+	tplPath := path.Join("templates", "contact.gohtml")
+	executeTemplate(w, tplPath)
 }
 
 func faqHandler(w http.ResponseWriter, r *http.Request) {
@@ -49,21 +52,12 @@ func faqHandler(w http.ResponseWriter, r *http.Request) {
 	`)
 }
 
-func userHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/html charset=utf-8")
-	userId := chi.URLParam(r, "userId")
-
-	fmt.Fprintf(w, `<h1> User:%v </h1>`, userId)
-
-}
-
 func main() {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Get("/", homeHandler)
 	r.Get("/contact", contactHandler)
 	r.Get("/faq", faqHandler)
-	r.Get("/users/{userId}", userHandler)
 	r.NotFound(func(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Page Not Found", http.StatusNotFound)
 	})
