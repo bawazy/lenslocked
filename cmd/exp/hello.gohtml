@@ -1,6 +1,16 @@
 <div>
-<h1> My Name is, {{.Name}}    </h1>
+<h1> Name: {{.Name}}</h1>
+<p> Bio: {{.Bio}} </p>
 
-<p> i am {{.Bio}} old</p>
+<script>
+const user ={
+    "name": {{.Name}},
+    "bio" : {{.Bio}},
+    "age": {{.Age}}
+}
+console.log(user)
+</script>
+
+
 
 </div>
