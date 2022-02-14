@@ -17,6 +17,8 @@ func main() {
 
 	r.Get("/", controllers.StaticHandler(views.Must(views.Parse(filepath.Join("templates", "home.gohtml")))))
 
+	r.Get("/friends", controllers.StaticHandler(views.Must(views.Parse(filepath.Join("templates", "friends.gohtml")))))
+
 	r.Get("/contact", controllers.StaticHandler(views.Must(views.Parse(filepath.Join("templates", "contact.gohtml")))))
 
 	r.Get("/faq", controllers.StaticHandler(views.Must(views.Parse(filepath.Join("templates", "faq.gohtml")))))
