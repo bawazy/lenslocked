@@ -15,7 +15,7 @@ func main() {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 
-	r.Get("/", controllers.StaticHandler(views.Must(views.ParseFS(templates.FS, "home.gohtml"))))
+	r.Get("/", controllers.StaticHandler(views.Must(views.ParseFS(templates.FS, "home.gohtml", "friends.gohtml"))))
 
 	r.Get("/friends", controllers.StaticHandler(views.Must(views.ParseFS(templates.FS, "friends.gohtml"))))
 
