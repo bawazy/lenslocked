@@ -32,7 +32,7 @@ func FAQ(tpl views.Template) http.HandlerFunc {
 		},
 		{
 			Question: "Do you have an office?",
-			Answer:   `We are totally remote!`,
+			Answer:   "We are totally remote!",
 		},
 	}
 
