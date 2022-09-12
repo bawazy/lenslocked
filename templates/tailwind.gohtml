@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-<header class="bg-gradient-to-r from-blue-800 to-indigo-800 text-white"> 
+<body class="flex flex-col min-h-screen bg-gray-100">
+ <header class="bg-gradient-to-r from-blue-800 to-indigo-800 text-white"> 
   <nav class="px-8 py-6 flex items-center "> 
     <div class="text-4xl pr-8 font-serif"> 📸 Lenslocked </div>
     
@@ -19,13 +19,31 @@
 
     <div>
       <a class="pr-2" href="#">Sign-in</a>
-      <a class="px-4 py-2 bg-blue-700 hover:bg-blue-600 rounded" href="#">Sign-up</a>
+      <a class="px-4 py-2 bg-blue-700 hover:bg-blue-600 rounded" href="/signup">Sign-up</a>
     </div>
   </nav>
 </header> 
-{{end}}
+ {{end}}
   <!-- Each Page's Content goes here -->
+
   {{define "footer"}}
+<footer class="bg-gradient-to-r from-blue-800 to-indigo-800
+ md:flex md:items-center md:justify-between md:p-6 dark:bg-gray-800 text-white mt-auto justify-center items-center">
+          <span class="text-sm  sm:text-center ">© 2022 <a href="https://calhoun.io" class="hover:underline">bawazy</a>. All Rights Reserved.
+          </span>
+          <ul class="flex flex-wrap items-center mt-3 text-sm text-white sm:mt-0">
+              <li>
+                  <a href="#" class="mr-4 hover:underline md:mr-6">Privacy Policy</a>
+              </li>
+              <li>
+                  <a href="/faq" class="mr-4 hover:underline md:mr-6">FAQ</a>
+              </li>
+              <li>
+                  <a href="/contact" class="hover:underline">Contact</a>
+              </li>
+          </ul>
+        </footer>
 </body>
 </html>
 {{end}} 
+

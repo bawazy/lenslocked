@@ -1,31 +1,30 @@
 package main
 
 import (
-	"errors"
-	"fmt"
+	"html/template"
+	"os"
 )
 
+type User struct {
+	Name string
+	Age  int
+}
+
 func main() {
-	err := B()
-	// fmt.Println(err)
-	if errors.Is(err, ErrNotFound) {
-		fmt.Println("true")
-	} else {
-		fmt.Println("false")
+	tpl, err := template.ParseFiles("hello.gohtml")
+	if err != nil {
+		panic(err)
 	}
-	//TODO: Determine if the 'err' variable is an 'ErrNotFound'
-}
 
-// it is common for packages like databse/sql to return an error
-//that is predefined like this one.
+	user := User{
+		Name: "sadik",
+		Age:  27,
+	}
 
-var ErrNotFound = errors.New("not Found")
+	err = tpl.Execute(os.Stdout, user)
 
-func A() error {
-	return ErrNotFound
-}
+	if err != nil {
+		panic(err)
+	}
 
-func B() error {
-	err := A()
-	return fmt.Errorf("b: %w", err)
 }
