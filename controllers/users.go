@@ -2,17 +2,14 @@ package controllers
 
 import (
 	"net/http"
-
-	"github.com/bawazy/lenslocked/views"
 )
 
 type Users struct {
 	Templates struct {
-		New views.Template
+		New Template
 	}
 }
 
 func (u Users) New(w http.ResponseWriter, r *http.Request) {
 	u.Templates.New.Execute(w, nil)
-
 }
