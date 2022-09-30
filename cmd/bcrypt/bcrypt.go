@@ -33,12 +33,11 @@ func hash(password string) {
 	fmt.Println(string(hashedBytes))
 }
 
-func compare(hash string, password string) {
+func compare(password string, hash string) {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
-
 	if err != nil {
 		fmt.Printf("Wrong Password")
 		return
 	}
-	fmt.Printf("Hash matches password %v\n Login Successful", password)
+	fmt.Printf("Login Successful")
 }
