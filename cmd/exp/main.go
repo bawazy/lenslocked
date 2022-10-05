@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
+	"github.com/bawazy/lenslocked/models"
 	_ "github.com/jackc/pgx/v4/stdlib"
 )
 
@@ -41,33 +42,44 @@ func main() {
 		panic(err)
 	}
 	fmt.Println("Connected:...")
-	//Create users,tweets and likes tables
-	_, err = db.Exec(`
-	CREATE TABLE IF NOT EXISTS users (  
-	id SERIAL PRIMARY KEY,
-	name TEXT,
-	email TEXT UNIQUE NOT NULL
-	);
 
-	CREATE TABLE IF NOT EXISTS tweets ( 
-		id SERIAL PRIMARY KEY,
-		user_ID INT NOT NULL,
-		tweet TEXT
-	);
+	us := models.UserService{
+		DB: db,
+	}
 
-	CREATE TABLE IF NOT EXISTS likes ( 
-		id SERIAL PRIMARY KEY,
-		user_ID INT NOT NULL,
-		tweet_ID INT,
-		likes INT 
-		);
-
-	`)
-
+	user, err := us.Create("bayero@gmail.com", "hayatu")
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("Tables Created")
+	fmt.Println(user)
+
+	//Create users,tweets and likes tables
+	// _, err = db.Exec(`
+	// CREATE TABLE IF NOT EXISTS users (
+	// id SERIAL PRIMARY KEY,
+	// name TEXT,
+	// email TEXT UNIQUE NOT NULL
+	// );
+
+	// CREATE TABLE IF NOT EXISTS tweets (
+	// 	id SERIAL PRIMARY KEY,
+	// 	user_ID INT NOT NULL,
+	// 	tweet TEXT
+	// );
+
+	// CREATE TABLE IF NOT EXISTS likes (
+	// 	id SERIAL PRIMARY KEY,
+	// 	user_ID INT NOT NULL,
+	// 	tweet_ID INT,
+	// 	likes INT
+	// 	);
+
+	// `)
+
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// fmt.Println("Tables Created")
 
 	// //INSERT INTO USERS TABLE
 	// name := "mohammed waziri"
@@ -133,36 +145,36 @@ func main() {
 	// fmt.Println("User information name=", name, "email=", email)
 
 	//SELECTING MULTIPLE ROWS ON OUR TWEETS TABLE
-	type Tweets struct {
-		id      int
-		user_id int
-		tweet   string
-	}
+	// type Tweets struct {
+	// 	id      int
+	// 	user_id int
+	// 	tweet   string
+	// }
 
-	var tweets []Tweets
-	user_id := 3
-	rows, err := db.Query(`
-	SELECT id,tweet FROM tweets
-	WHERE user_id=$1;`, user_id)
-	if err != nil {
-		panic(err)
-	}
-	defer rows.Close()
+	// var tweets []Tweets
+	// user_id := 3
+	// rows, err := db.Query(`
+	// SELECT id,tweet FROM tweets
+	// WHERE user_id=$1;`, user_id)
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// defer rows.Close()
 
-	for rows.Next() {
-		var tweet Tweets
-		tweet.user_id = user_id
-		err := rows.Scan(&tweet.id, &tweet.tweet)
-		if err != nil {
-			panic(err)
-		}
-		tweets = append(tweets, tweet)
-	}
-	err = rows.Err()
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println("tweets:", tweets)
+	// for rows.Next() {
+	// 	var tweet Tweets
+	// 	tweet.user_id = user_id
+	// 	err := rows.Scan(&tweet.id, &tweet.tweet)
+	// 	if err != nil {
+	// 		panic(err)
+	// 	}
+	// 	tweets = append(tweets, tweet)
+	// }
+	// err = rows.Err()
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// fmt.Println("tweets:", tweets)
 
 	// //Create a table
 	// _, err = db.Exec(`
