@@ -30,7 +30,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	db.Close()
+	defer db.Close()
 	userService := models.UserService{
 		DB: db,
 	}
