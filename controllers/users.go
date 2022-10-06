@@ -3,12 +3,15 @@ package controllers
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/bawazy/lenslocked/models"
 )
 
 type Users struct {
 	Templates struct {
 		New Template
 	}
+	UserService *models.UserService
 }
 
 func (u Users) New(w http.ResponseWriter, r *http.Request) {
@@ -20,15 +23,9 @@ func (u Users) New(w http.ResponseWriter, r *http.Request) {
 }
 
 func (u Users) Create(w http.ResponseWriter, r *http.Request) {
-	// err := r.ParseForm()
-	// if err != nil {
-	// 	http.Error(w, "Error parsing form value", http.StatusBadRequest)
-	// 	return
-	// }
-	// fmt.Fprint(w, "Email: ", r.PostFormValue("email"))
 	fmt.Fprint(w, "Email: ", r.FormValue("email"))
 	fmt.Fprint(w, "Password: ", r.FormValue("password"))
-	// fmt.Fprint(w, "Password: ", r.PostFormValue("password"))
+
 }
 
 func RedirectToSignUp(w http.ResponseWriter, r *http.Request) {
